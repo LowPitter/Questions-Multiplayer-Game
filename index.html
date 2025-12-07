@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questions Multiplayer Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>Questions Multiplayer</h1>
+    <div id="setup-screen">
+      <input id="room-input" placeholder="Nome da sala" />
+      <input id="password-input" placeholder="Senha da sala" type="password" />
+      <button id="create-room">Criar sala</button>
+      <button id="join-room">Entrar na sala</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2 id="room-title"></h2>
+      <div id="question-box">
+        <p id="question-text"></p>
+        <div id="answers"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+  <script src="generator.js"></script>
+</body>
+</html>
