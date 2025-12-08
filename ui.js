@@ -1,117 +1,40 @@
-/* ==========================================================
-   UI.JS — Sistema de UI simples para toasts e modais
-   ========================================================== */
-
-/* -------------------------------
-   TOASTS (mensagens rápidas)
---------------------------------*/
-
-function showToast(msg, type = "info") {
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
-    toast.textContent = msg;
-
-    document.body.appendChild(toast);
-
-    // aparece gradualmente
-    setTimeout(() => {
-        toast.classList.add("show");
-    }, 50);
-
-    // desaparece após alguns segundos
-    setTimeout(() => {
-        toast.classList.remove("show");
-        setTimeout(() => toast.remove(), 300);
-    }, 2500);
+// js/ui.js (module)
+export function showToast(msg, type = "info") {
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.textContent = msg;
+  Object.assign(toast.style, {
+    position:'fixed',top:'20px',left:'50%',transform:'translateX(-50%)',
+    background: type==='success' ? '#16a34a' : (type==='error' ? '#dc2626' : '#111'),
+    color:'#fff',padding:'10px 16px',borderRadius:'10px',zIndex:9999,opacity:0,transition:'0.25s'
+  });
+  document.body.appendChild(toast);
+  requestAnimationFrame(()=> toast.style.opacity = '1');
+  setTimeout(()=> {
+    toast.style.opacity = '0';
+    setTimeout(()=> toast.remove(), 300);
+  }, 2200);
 }
 
-
-/* -------------------------------
-   MODAL (confirmar ações)
---------------------------------*/
-
-function openModal(title, message, onConfirm = null, onCancel = null) {
-    // wrapper
-    const overlay = document.createElement("div");
-    overlay.className = "modal-overlay";
-
-    // corpo
-    const modal = document.createElement("div");
-    modal.className = "modal-box";
-
-    modal.innerHTML = `
-        <h2>${title}</h2>
-        <p>${message}</p>
-        <div class="modal-buttons">
-            <button id="modalConfirm" class="btn-primary">Confirmar</button>
-            <button id="modalCancel" class="btn-secondary">Cancelar</button>
-        </div>
-    `;
-
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-
-    // eventos
-    document.getElementById("modalConfirm").onclick = () => {
-        overlay.remove();
-        if (onConfirm) onConfirm();
-    };
-
-    document.getElementById("modalCancel").onclick = () => {
-        overlay.remove();
-        if (onCancel) onCancel();
-    };
+export function openModal(el) {
+  if(!el) return;
+  el.classList.remove('hidden');
+  el.setAttribute('aria-hidden','false');
+}
+export function closeModal(el) {
+  if(!el) return;
+  el.classList.add('hidden');
+  el.setAttribute('aria-hidden','true');
 }
 
-
-/* -------------------------------
-   TELAS COM TRANSIÇÃO
---------------------------------*/
-
-function changeScreen(toPage) {
-    const fade = document.createElement("div");
-    fade.className = "screen-fade";
-
-    document.body.appendChild(fade);
-
-    fade.classList.add("fade-in");
-
-    setTimeout(() => {
-        window.location.href = toPage;
-    }, 300);
+export function showLoading(){
+  if(document.getElementById('globalLoader')) return;
+  const loader = document.createElement('div');
+  loader.id = 'globalLoader';
+  Object.assign(loader.style, {position:'fixed',inset:0,background:'rgba(0,0,0,0.4)',display:'grid',placeItems:'center',zIndex:9998});
+  loader.innerHTML = `<div style="width:56px;height:56px;border-radius:8px;background:#fff;display:grid;place-items:center">Loading...</div>`;
+  document.body.appendChild(loader);
 }
-
-
-/* -------------------------------
-   BOTÃO DESABILITÁVEL
---------------------------------*/
-
-function disableButton(id, disabled = true) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.disabled = disabled;
-
-    if (disabled) {
-        el.classList.add("btn-disabled");
-    } else {
-        el.classList.remove("btn-disabled");
-    }
-}
-
-
-/* -------------------------------
-   LOADING SPINNER
---------------------------------*/
-
-function showLoading() {
-    const loader = document.createElement("div");
-    loader.className = "loading-overlay";
-    loader.innerHTML = `<div class="spinner"></div>`;
-    loader.id = "globalLoader";
-    document.body.appendChild(loader);
-}
-
-function hideLoading() {
-    const loader = document.getElementById("globalLoader");
-    if (loader) loader.remove();
+export function hideLoading(){
+  const l = document.getElementById('globalLoader'); if(l) l.remove();
 }
