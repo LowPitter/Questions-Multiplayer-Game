@@ -1,158 +1,149 @@
 /* ==========================
-   STYLE.CSS — Estilo geral Teste do Milhão
+   STYLE.CSS — Teste do Milhão
    ========================== */
 
-body {
-  font-family: Arial, sans-serif;
-  background: #1b1d27;
-  color: #f5f5dc;
+/* --- RESET e BODY --- */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #1b1d27;
+  color: #fff;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
+/* --- CARD CENTRAL --- */
 .centered-card {
-  background: #2c2f3a;
-  padding: 40px 35px;
+  background: #2a2c3a;
+  padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
-  text-align: center;
-  width: 400px; /* desktop maior */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  width: 400px;
   max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s ease;
 }
 
+/* --- HEADER --- */
 .card-header h1 {
   font-size: 32px;
-  margin-bottom: 15px;
   color: #ffd700; /* dourado */
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .card-header .subtitle {
-  font-size: 15px;
-  color: #e0d18a;
-  margin-bottom: 25px;
+  font-size: 16px;
+  text-align: center;
+  color: #f0e68c; /* amarelo claro */
+  opacity: 0.9;
 }
 
+/* --- FORM ROWS --- */
 .form-row {
-  margin: 14px 0;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
 }
 
 .form-row label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #f0e68c;
 }
 
 .form-row input[type="text"],
 .form-row input[type="password"] {
-  width: 100%;
-  padding: 12px;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #555;
   background: #1b1d27;
-  color: #f5f5dc;
+  color: #fff;
 }
 
-input::placeholder {
-  color: #b5b58c;
-}
-
-button {
-  padding: 12px 18px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-button.primary {
-  background: #ffd700;
-  color: #1b1d27;
-}
-
-button.primary:hover {
-  background: #e6c200;
-}
-
-button.secondary,
-button.ghost {
-  background: transparent;
-  border: 2px solid #ffd700;
-  color: #ffd700;
-}
-
-button.ghost:hover {
-  background: #ffd700;
-  color: #1b1d27;
-}
-
-button.full {
-  width: 100%;
-  margin-top: 12px;
-}
-
-.controls-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
+/* --- CHECKBOX ROW --- */
 .checkbox-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
+  margin-bottom: 12px;
 }
 
-.hidden {
-  display: none;
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
 }
 
+/* --- BUTTONS --- */
+button {
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+button.full {
+  width: 100%;
+}
+
+.btn.primary {
+  background: #ffd700;
+  color: #1b1d27;
+}
+
+.btn.primary:hover {
+  background: #e6c200;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: #ffd700;
+  border: 2px solid #ffd700;
+}
+
+.btn.ghost:hover {
+  background: rgba(255, 215, 0, 0.1);
+}
+
+/* --- CONTROLS ROW --- */
+.controls-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* --- FOOTER --- */
 .card-footer {
-  margin-top: 18px;
   font-size: 12px;
-  color: #b5b58c;
+  text-align: center;
+  color: #f0e68c;
+  opacity: 0.8;
 }
 
-/* ----------------------------
-   Responsivo — celular em pé
------------------------------ */
-@media (max-width: 480px) {
-  body {
-    height: 100%;
-    padding: 0;
-  }
+/* --- HIDDEN --- */
+.hidden {
+  display: none !important;
+}
 
+/* --- RESPONSIVO --- */
+@media (max-width: 600px) {
   .centered-card {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     border-radius: 0;
-    padding: 30px 20px;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .card-header h1 {
-    font-size: 28px;
-  }
-
-  .card-header .subtitle {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  button {
-    padding: 14px;
-  }
-
-  .controls-row {
-    flex-direction: column;
+    padding: 20px;
+    justify-content: flex-start;
   }
 }
