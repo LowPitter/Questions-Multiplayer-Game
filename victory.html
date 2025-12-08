@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vitória — Questions Multiplayer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+  <div class="end-screen victory">
+    <h1>🎉 Você Venceu! 🎉</h1>
+    <p class="subtitle">Parabéns! Sua pontuação final foi:</p>
+
+    <div class="score-box">
+      <span id="finalScore">0</span>
+      <small>pontos</small>
+    </div>
+
+    <div class="buttons">
+      <button class="btn primary full" id="btn-play-again">Jogar Novamente</button>
+      <button class="btn ghost full" id="btn-exit">Sair</button>
+    </div>
+  </div>
+
+  <script>
+    const url = new URL(location.href);
+    const score = url.searchParams.get('score') || 0;
+    document.getElementById('finalScore').textContent = score;
+
+    document.getElementById('btn-play-again').addEventListener('click', ()=>{
+      location.href = '/index.html';
+    });
+
+    document.getElementById('btn-exit').addEventListener('click', ()=>{
+      location.href = '/index.html';
+    });
+  </script>
+</body>
+</html>
