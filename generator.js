@@ -1,7 +1,7 @@
 // generator.js
 // IA simples offline para gerar perguntas aleatórias
 
-function gerarPergunta() {
+export function gerarPergunta() {
   const temas = [
     gerarMatematica,
     gerarGeografia,
@@ -20,8 +20,8 @@ function gerarPergunta() {
 function gerarMatematica() {
   const a = Math.floor(Math.random() * 20) + 1;
   const b = Math.floor(Math.random() * 20) + 1;
-  const ops = ["+", "-", "x"];
-  const op = ops[Math.floor(Math.random() * ops.length)];
+  const operacoes = ["+", "-", "x"];
+  const op = operacoes[Math.floor(Math.random() * operacoes.length)];
 
   let correta;
   if (op === "+") correta = a + b;
@@ -35,12 +35,12 @@ function gerarMatematica() {
 }
 
 function gerarAlternativasNumericas(correta) {
-  const respostas = new Set([correta]);
-  while (respostas.size < 4) {
+  let respostas = [correta];
+  while (respostas.length < 4) {
     const erro = correta + (Math.floor(Math.random() * 10) - 5);
-    respostas.add(erro);
+    if (!respostas.includes(erro)) respostas.push(erro);
   }
-  return shuffleArray([...respostas].map(String));
+  return respostas.map(String).sort(() => Math.random() - 0.5);
 }
 
 // ----------------------
@@ -60,15 +60,16 @@ function gerarGeografia() {
   const escolhido = paises[Math.floor(Math.random() * paises.length)];
   const correta = escolhido.capital;
 
-  const alternativas = new Set([correta]);
-  while (alternativas.size < 4) {
-    alternativas.add(cidadesExtras[Math.floor(Math.random() * cidadesExtras.length)]);
+  let alternativas = [correta];
+  while (alternativas.length < 4) {
+    const aleatoria = cidadesExtras[Math.floor(Math.random() * cidadesExtras.length)];
+    if (!alternativas.includes(aleatoria)) alternativas.push(aleatoria);
   }
 
   return {
     pergunta: `Qual é a capital de ${escolhido.pais}?`,
     correta,
-    alternativas: shuffleArray([...alternativas])
+    alternativas: alternativas.sort(() => Math.random() - 0.5)
   };
 }
 
@@ -85,10 +86,12 @@ function gerarHistoria() {
 
   const e = eventos[Math.floor(Math.random() * eventos.length)];
   const correta = e.ano;
+  const alternativas = gerarAlternativasNumericas(correta);
+
   return {
     pergunta: `Em que ano aconteceu ${e.evento}?`,
     correta: correta.toString(),
-    alternativas: gerarAlternativasNumericas(correta)
+    alternativas
   };
 }
 
@@ -103,11 +106,9 @@ function gerarCiencia() {
   ];
 
   const q = perguntas[Math.floor(Math.random() * perguntas.length)];
-  return {
-    pergunta: q.p,
-    correta: q.correta,
-    alternativas: shuffleArray([q.correta, ...q.erradas])
-  };
+  const alternativas = [q.correta, ...q.erradas].sort(() => Math.random() - 0.5);
+
+  return { pergunta: q.p, correta: q.correta, alternativas };
 }
 
 // ----------------------
@@ -121,16 +122,7 @@ function gerarCuriosidades() {
   ];
 
   const q = perguntas[Math.floor(Math.random() * perguntas.length)];
-  return {
-    pergunta: q.p,
-    correta: q.correta,
-    alternativas: shuffleArray([q.correta, ...q.erradas])
-  };
-}
+  const alternativas = [q.correta, ...q.erradas].sort(() => Math.random() - 0.5);
 
-// ----------------------
-// Utilitário: embaralhar array
-// ----------------------
-function shuffleArray(arr) {
-  return arr.sort(() => Math.random() - 0.5);
+  return { pergunta: q.p, correta: q.correta, alternativas };
 }
