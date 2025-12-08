@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Configurar Sala — Questions Multiplayer</title>
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/game.css">
 </head>
 <body>
-  <main class="centered-card">
+  <main class="centered-card dark-card">
     <header class="card-header">
       <h1>Configurar Sala</h1>
       <p class="subtitle">Ajuste as regras antes de começar.</p>
@@ -24,10 +25,10 @@
         <input id="roomPassword" disabled>
       </div>
 
-      <hr style="border-color: #f0e68c; opacity:0.3;">
+      <hr>
 
       <div class="form-row">
-        <label for="questionCount">Quantidade de perguntas</label>
+        <label for="questionCount">Quantidade de Perguntas</label>
         <select id="questionCount">
           <option value="5">5</option>
           <option value="10" selected>10</option>
@@ -37,7 +38,7 @@
       </div>
 
       <div class="form-row">
-        <label for="timeLimit">Tempo por pergunta (segundos)</label>
+        <label for="timeLimit">Tempo por Pergunta (segundos)</label>
         <select id="timeLimit">
           <option value="10">10</option>
           <option value="15">15</option>
@@ -47,7 +48,7 @@
       </div>
 
       <div class="form-row">
-        <label>Modo</label>
+        <label>Modo de Dificuldade</label>
         <select id="mode">
           <option value="normal" selected>Normal</option>
           <option value="hard">Difícil</option>
@@ -55,28 +56,11 @@
         </select>
       </div>
 
-      <div class="form-row">
-        <label>Privacidade</label>
-        <select id="privacy">
-          <option value="private" selected>Privada (senha obrigatória)</option>
-          <option value="public">Pública</option>
-        </select>
-      </div>
-
-      <div class="form-row hidden" id="codigoPrivadoWrapper">
-        <label>Código Privado</label>
-        <input id="codigoPrivado" placeholder="Ex: 1234">
-      </div>
-
-      <hr style="border-color: #f0e68c; opacity:0.3;">
+      <hr>
 
       <button id="btn-start" class="btn primary full">Iniciar Jogo</button>
       <button id="btn-back" class="btn ghost full">Voltar</button>
     </section>
-
-    <footer class="card-footer">
-      <small>Configurações aplicam apenas para esta sala</small>
-    </footer>
   </main>
 
   <script>
@@ -85,26 +69,13 @@
     const password = url.searchParams.get('password') || '';
     const isHost = url.searchParams.get('host') === 'true';
 
-    const roomNameInput = document.getElementById('roomName');
-    const roomPasswordInput = document.getElementById('roomPassword');
-    const privacySelect = document.getElementById('privacy');
-    const codigoWrapper = document.getElementById('codigoPrivadoWrapper');
-
-    roomNameInput.value = room;
-    roomPasswordInput.value = password;
+    document.getElementById('roomName').value = room;
+    document.getElementById('roomPassword').value = password;
 
     if(!isHost){
       alert('Apenas o criador da sala pode configurar.');
       location.href = '/index.html';
     }
-
-    privacySelect.addEventListener('change', ()=>{
-      if(privacySelect.value === 'private'){
-        codigoWrapper.classList.remove('hidden');
-      } else {
-        codigoWrapper.classList.add('hidden');
-      }
-    });
 
     document.getElementById('btn-start').addEventListener('click', ()=>{
       const params = new URLSearchParams();
@@ -113,9 +84,6 @@
       params.set('questions', document.getElementById('questionCount').value);
       params.set('time', document.getElementById('timeLimit').value);
       params.set('mode', document.getElementById('mode').value);
-      params.set('privacy', document.getElementById('privacy').value);
-      if(document.getElementById('codigoPrivado').value)
-        params.set('privateCode', document.getElementById('codigoPrivado').value);
 
       location.href = '/game.html?' + params.toString();
     });
