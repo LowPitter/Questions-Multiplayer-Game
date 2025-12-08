@@ -3,44 +3,69 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Teste do Milhão</title>
+  <title>Teste do Milhão — Entrar / Criar Sala</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="centered-card" id="card">
+  <main class="centered-card">
     <header class="card-header">
       <h1>Teste do Milhão</h1>
-      <p class="subtitle">Crie ou entre em uma sala para jogar.</p>
+      <p class="subtitle">Crie ou entre em uma sala para começar a jogar.</p>
     </header>
 
     <section class="card-body">
 
-      <!-- Tela inicial com botões -->
-      <div id="initial-buttons">
-        <button id="btn-create-room" class="primary full">Criar Sala</button>
-        <button id="btn-join-room" class="ghost full">Entrar em Sala</button>
+      <!-- Primeira tela com botões principais -->
+      <div id="main-options">
+        <div class="controls-row">
+          <button id="btn-create" class="btn primary full">Criar Sala</button>
+          <button id="btn-join" class="btn ghost full">Entrar na Sala</button>
+        </div>
       </div>
 
-      <!-- Formulário de criar/entrar sala -->
-      <div id="room-form" class="hidden">
+      <!-- Tela Criar Sala -->
+      <div id="create-room-form" class="hidden">
         <div class="form-row">
-          <label for="roomNameInput">Nome da Sala</label>
-          <input type="text" id="roomNameInput" placeholder="Ex: SalaDoPedro">
+          <label for="createRoomName">Nome da Sala</label>
+          <input type="text" id="createRoomName" placeholder="Ex: SalaDoPedro">
         </div>
 
         <div class="checkbox-row">
-          <input type="checkbox" id="privateCheck">
-          <label for="privateCheck">Privada</label>
+          <input type="checkbox" id="createPrivate">
+          <label for="createPrivate">Privada</label>
         </div>
 
-        <div class="form-row hidden" id="passwordRow">
-          <label for="roomPasswordInput">Senha</label>
-          <input type="password" id="roomPasswordInput" placeholder="Senha da sala">
+        <div class="form-row hidden" id="createPasswordWrapper">
+          <label for="createRoomPassword">Senha da Sala</label>
+          <input type="password" id="createRoomPassword" placeholder="Senha (mín. 4 chars)">
         </div>
 
         <div class="controls-row">
-          <button id="submitRoom" class="primary full"></button>
-          <button id="btn-back" class="ghost full">Voltar</button>
+          <button id="btn-create-confirm" class="btn primary full">Criar Sala</button>
+          <button id="btn-create-back" class="btn ghost full">Voltar</button>
+        </div>
+      </div>
+
+      <!-- Tela Entrar Sala -->
+      <div id="join-room-form" class="hidden">
+        <div class="form-row">
+          <label for="joinRoomName">Nome da Sala</label>
+          <input type="text" id="joinRoomName" placeholder="Ex: SalaDoPedro">
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="joinPrivate">
+          <label for="joinPrivate">Privada</label>
+        </div>
+
+        <div class="form-row hidden" id="joinPasswordWrapper">
+          <label for="joinRoomPassword">Senha da Sala</label>
+          <input type="password" id="joinRoomPassword" placeholder="Senha da Sala">
+        </div>
+
+        <div class="controls-row">
+          <button id="btn-join-confirm" class="btn primary full">Entrar na Sala</button>
+          <button id="btn-join-back" class="btn ghost full">Voltar</button>
         </div>
       </div>
 
@@ -52,82 +77,81 @@
   </main>
 
   <script>
-    const card = document.getElementById("card");
-    const initialButtons = document.getElementById("initial-buttons");
-    const roomForm = document.getElementById("room-form");
-    const submitRoom = document.getElementById("submitRoom");
-    const btnBack = document.getElementById("btn-back");
-    const privateCheck = document.getElementById("privateCheck");
-    const passwordRow = document.getElementById("passwordRow");
-    const roomNameInput = document.getElementById("roomNameInput");
-    const roomPasswordInput = document.getElementById("roomPasswordInput");
+    // Elementos principais
+    const mainOptions = document.getElementById('main-options');
+    const createForm = document.getElementById('create-room-form');
+    const joinForm = document.getElementById('join-room-form');
 
-    let actionType = ""; // "create" ou "join"
+    // Checkboxes e wrappers
+    const createPrivate = document.getElementById('createPrivate');
+    const createPasswordWrapper = document.getElementById('createPasswordWrapper');
+    const joinPrivate = document.getElementById('joinPrivate');
+    const joinPasswordWrapper = document.getElementById('joinPasswordWrapper');
 
-    // Mostrar formulário de criar sala
-    document.getElementById("btn-create-room").onclick = () => {
-      actionType = "create";
-      initialButtons.classList.add("hidden");
-      roomForm.classList.remove("hidden");
-      submitRoom.textContent = "Criar Sala";
-      card.classList.add("full-screen");
-    };
+    // Botões criar/entrar
+    const btnCreate = document.getElementById('btn-create');
+    const btnJoin = document.getElementById('btn-join');
+    const btnCreateBack = document.getElementById('btn-create-back');
+    const btnJoinBack = document.getElementById('btn-join-back');
+    const btnCreateConfirm = document.getElementById('btn-create-confirm');
+    const btnJoinConfirm = document.getElementById('btn-join-confirm');
 
-    // Mostrar formulário de entrar em sala
-    document.getElementById("btn-join-room").onclick = () => {
-      actionType = "join";
-      initialButtons.classList.add("hidden");
-      roomForm.classList.remove("hidden");
-      submitRoom.textContent = "Entrar na Sala";
-      card.classList.add("full-screen");
-    };
+    // Mostrar criar sala
+    btnCreate.addEventListener('click', () => {
+      mainOptions.classList.add('hidden');
+      createForm.classList.remove('hidden');
+    });
 
-    // Mostrar/ocultar campo senha
-    privateCheck.onchange = () => {
-      if(privateCheck.checked){
-        passwordRow.classList.remove("hidden");
-      } else {
-        passwordRow.classList.add("hidden");
-      }
-    };
+    // Mostrar entrar sala
+    btnJoin.addEventListener('click', () => {
+      mainOptions.classList.add('hidden');
+      joinForm.classList.remove('hidden');
+    });
 
-    // Voltar para tela inicial
-    btnBack.onclick = () => {
-      roomForm.classList.add("hidden");
-      initialButtons.classList.remove("hidden");
-      card.classList.remove("full-screen");
-      roomNameInput.value = "";
-      roomPasswordInput.value = "";
-      privateCheck.checked = false;
-      passwordRow.classList.add("hidden");
-    };
+    // Voltar para primeira tela
+    btnCreateBack.addEventListener('click', () => {
+      createForm.classList.add('hidden');
+      mainOptions.classList.remove('hidden');
+    });
+    btnJoinBack.addEventListener('click', () => {
+      joinForm.classList.add('hidden');
+      mainOptions.classList.remove('hidden');
+    });
 
-    // Submeter ação (criar ou entrar)
-    submitRoom.onclick = () => {
-      const roomName = roomNameInput.value.trim();
-      const password = roomPasswordInput.value.trim();
+    // Mostrar campo de senha se privada
+    createPrivate.addEventListener('change', () => {
+      if (createPrivate.checked) createPasswordWrapper.classList.remove('hidden');
+      else createPasswordWrapper.classList.add('hidden');
+    });
+    joinPrivate.addEventListener('change', () => {
+      if (joinPrivate.checked) joinPasswordWrapper.classList.remove('hidden');
+      else joinPasswordWrapper.classList.add('hidden');
+    });
 
-      if(!roomName){
-        alert("Digite o nome da sala!");
-        return;
-      }
-
-      if(privateCheck.checked && password.length < 1){
-        alert("Digite a senha da sala!");
-        return;
-      }
-
+    // Criar sala
+    btnCreateConfirm.addEventListener('click', () => {
+      const room = document.getElementById('createRoomName').value.trim();
+      const password = document.getElementById('createRoomPassword').value.trim();
+      if (!room) { alert('Digite o nome da sala.'); return; }
+      if (createPrivate.checked && password.length < 4) { alert('Senha precisa ter pelo menos 4 caracteres.'); return; }
       const params = new URLSearchParams();
-      params.set("room", roomName);
-      if(privateCheck.checked) params.set("password", password);
+      params.set('room', room);
+      params.set('password', password);
+      params.set('host', 'true');
+      location.href = '/config.html?' + params.toString();
+    });
 
-      if(actionType === "create"){
-        params.set("host", "true");
-        window.location.href = "/config.html?" + params.toString();
-      } else if(actionType === "join"){
-        window.location.href = "/game.html?" + params.toString();
-      }
-    };
+    // Entrar na sala
+    btnJoinConfirm.addEventListener('click', () => {
+      const room = document.getElementById('joinRoomName').value.trim();
+      const password = document.getElementById('joinRoomPassword').value.trim();
+      if (!room) { alert('Digite o nome da sala.'); return; }
+      if (joinPrivate.checked && password.length < 1) { alert('Digite a senha da sala.'); return; }
+      const params = new URLSearchParams();
+      params.set('room', room);
+      params.set('password', password);
+      location.href = '/game.html?' + params.toString();
+    });
   </script>
 </body>
 </html>
