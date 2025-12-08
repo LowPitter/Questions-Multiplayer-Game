@@ -1,12 +1,11 @@
-/* =======================================================
-   STYLE.CSS — Estilos gerais do Questions Multiplayer
-   Tema: Dark + Dourado
-======================================================= */
+/* ==============================
+   ESTILO GERAL — DARK + DOURADO
+   ============================== */
 
 body {
-  font-family: "Arial", sans-serif;
-  background: #1b1d27;
-  color: #fff;
+  font-family: 'Arial', sans-serif;
+  background: #1b1d27; /* fundo escuro */
+  color: #f5f5dc; /* bege/dourado claro */
   margin: 0;
   padding: 0;
   display: flex;
@@ -15,318 +14,199 @@ body {
   min-height: 100vh;
 }
 
-.hidden {
-  display: none;
+a, button {
+  font-family: inherit;
 }
 
-/* -------------------------
-   Cards e Layouts Centrais
----------------------------*/
-.centered-card, .large {
+.centered-card {
   background: #2c2f3a;
-  border-radius: 20px;
-  padding: 25px 30px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  width: 350px;
+  max-width: 90%;
+  padding: 20px;
   text-align: center;
+  color: #f5f5dc;
 }
 
 .large {
-  max-width: 700px;
+  width: 450px;
+  padding: 25px;
 }
 
-/* -------------------------
-   Cabeçalhos
----------------------------*/
 .card-header h1 {
+  margin: 0;
   font-size: 28px;
-  margin: 0 0 10px;
-  color: #ffd700; /* dourado */
-  text-shadow: 0 0 6px #fff;
+  color: #ffd700;
 }
 
 .card-header .subtitle {
   font-size: 14px;
+  opacity: 0.8;
+}
+
+.card-body {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #3b3f50;
+  color: #f5f5dc;
+}
+
+input::placeholder {
   color: #ccc;
 }
 
-/* -------------------------
-   Inputs e Formulários
----------------------------*/
-input, select {
-  width: 90%;
-  padding: 10px 12px;
-  margin: 8px 0;
-  border-radius: 10px;
-  border: 1px solid #555;
-  background: #1e2028;
-  color: #fff;
-  font-size: 16px;
-}
-
-input:disabled {
-  background: #333;
-  opacity: 0.7;
-}
-
-label {
-  display: block;
-  text-align: left;
-  margin: 5px 0 3px;
-  font-weight: bold;
-  color: #ffd700;
-}
-
-/* -------------------------
-   Botões
----------------------------*/
 button {
-  padding: 12px 20px;
+  padding: 10px;
   border-radius: 12px;
-  font-weight: bold;
   border: none;
   cursor: pointer;
   transition: 0.2s;
-  font-size: 16px;
+  font-weight: bold;
 }
 
 button.primary {
-  background: #ffd700;
+  background: #ffd700; /* dourado */
   color: #1b1d27;
 }
 
 button.primary:hover {
-  background: #e6c200;
+  background: #ffea70;
 }
 
 button.ghost {
   background: transparent;
-  border: 2px solid #ffd700;
   color: #ffd700;
+  border: 2px solid #ffd700;
 }
 
 button.ghost:hover {
-  background: #ffd700;
-  color: #1b1d27;
+  background: rgba(255, 215, 0, 0.2);
 }
 
 button.full {
   width: 100%;
-  margin: 8px 0;
 }
 
-/* -------------------------
-   Rodapés
----------------------------*/
-.card-footer small {
-  color: #ccc;
-}
-
-/* -------------------------
-   Game Area
----------------------------*/
-#game-container {
-  max-width: 900px;
-  width: 95%;
+.controls-row, .extra, .buttons {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-#top-bar, #footer-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: #2c2f3a;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+small {
+  opacity: 0.7;
 }
 
-#top-bar span, #footer-bar #status {
-  font-size: 14px;
-  color: #ffd700;
+.hidden {
+  display: none;
 }
 
-#score-board b {
-  font-size: 18px;
-  color: #fff;
-}
-
-/* -------------------------
-   Game Area Perguntas
----------------------------*/
-#game-area {
-  background: #1e2028;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-#question-text {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ffd700;
-}
-
-#answers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-#answers button {
-  background: #333;
-  color: #fff;
-}
-
-#answers button:hover {
-  background: #444;
-}
-
-#answers button.correct {
-  background: #28a745 !important;
-  color: #fff;
-}
-
-#answers button.wrong {
-  background: #d62828 !important;
-  color: #fff;
-}
-
-/* -------------------------
-   Temporizador
----------------------------*/
-#timer {
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  background: #2c2f3a;
-  color: #ffd700;
-  padding: 15px;
-  border-radius: 50px;
-  width: 100px;
-  margin: auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-
-/* -------------------------
-   End Screens (Vitória / Derrota)
----------------------------*/
-.end-screen {
-  max-width: 500px;
-  width: 90%;
-  margin: 50px auto;
-  text-align: center;
-  padding: 30px;
-  border-radius: 20px;
-  background: #2c2f3a;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-
-.end-screen h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.end-screen .subtitle {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #ffd700;
-  opacity: 0.9;
-}
-
-.score-box {
-  font-size: 40px;
-  font-weight: bold;
-  background: #1b1d27;
-  color: #ffd700;
-  padding: 20px;
-  border-radius: 18px;
-  margin-bottom: 25px;
-}
-
-.end-screen.victory h1 {
-  color: #28a745;
-}
-
-.end-screen.defeat h1 {
-  color: #d62828;
-}
-
-/* -------------------------
-   Modals e Toasts
----------------------------*/
-.modal, .modal-overlay {
-  position: fixed;
-  top:0; left:0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(3px);
-  background: rgba(0,0,0,0.65);
-  z-index: 1000;
-}
-
-.modal-content, .modal-box {
-  background: #2c2f3a;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
-  color: #ffd700;
-  text-align: center;
-}
-
+/* TOASTS */
 .toast {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(100px);
   background: #ffd700;
   color: #1b1d27;
-  padding: 10px 20px;
+  padding: 15px 25px;
   border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   font-weight: bold;
   opacity: 0;
-  transition: 0.3s;
-  z-index: 2000;
+  transition: all 0.3s ease;
+  z-index: 1000;
 }
 
 .toast.show {
   opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
-/* -------------------------
-   Loading Spinner
----------------------------*/
+.toast-info { background: #ffd700; color: #1b1d27; }
+.toast-success { background: #28a745; color: #fff; }
+.toast-error { background: #d62828; color: #fff; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: #2c2f3a;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  color: #f5f5dc;
+  max-width: 90%;
+  text-align: center;
+}
+
+.modal-box h2 {
+  color: #ffd700;
+}
+
+.modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+/* LOADING SPINNER */
 .loading-overlay {
   position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.75);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .spinner {
-  border: 6px solid #f3f3f3;
+  border: 6px solid #3b3f50;
   border-top: 6px solid #ffd700;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 60px; height: 60px;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* LINKS e FOOTER */
+.card-footer small {
+  display: block;
+  margin-top: 15px;
+  font-size: 12px;
+  opacity: 0.6;
 }
