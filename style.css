@@ -1,212 +1,127 @@
-/* ==============================
-   ESTILO GERAL — DARK + DOURADO
-   ============================== */
+/* ==========================
+   STYLE.CSS — Estilo geral Teste do Milhão
+   ========================== */
 
 body {
-  font-family: 'Arial', sans-serif;
-  background: #1b1d27; /* fundo escuro */
-  color: #f5f5dc; /* bege/dourado claro */
+  font-family: Arial, sans-serif;
+  background: #1b1d27;
+  color: #f5f5dc;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-}
-
-a, button {
-  font-family: inherit;
+  height: 100vh;
 }
 
 .centered-card {
   background: #2c2f3a;
+  padding: 30px 25px;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-  width: 350px;
-  max-width: 90%;
-  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   text-align: center;
-  color: #f5f5dc;
-}
-
-.large {
-  width: 450px;
-  padding: 25px;
+  width: 350px;
 }
 
 .card-header h1 {
-  margin: 0;
   font-size: 28px;
-  color: #ffd700;
+  margin-bottom: 10px;
+  color: #ffd700; /* dourado */
 }
 
 .card-header .subtitle {
   font-size: 14px;
-  opacity: 0.8;
-}
-
-.card-body {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  color: #e0d18a;
+  margin-bottom: 20px;
 }
 
 .form-row {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
+  margin: 12px 0;
+  text-align: left;
 }
 
-input, select {
+.form-row label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-row input[type="text"],
+.form-row input[type="password"] {
   width: 100%;
   padding: 10px;
   border-radius: 10px;
-  border: none;
-  background: #3b3f50;
+  border: 1px solid #555;
+  background: #1b1d27;
   color: #f5f5dc;
 }
 
 input::placeholder {
-  color: #ccc;
+  color: #b5b58c;
 }
 
 button {
-  padding: 10px;
-  border-radius: 12px;
+  padding: 10px 15px;
   border: none;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
   font-weight: bold;
+  transition: 0.2s;
 }
 
 button.primary {
-  background: #ffd700; /* dourado */
+  background: #ffd700;
   color: #1b1d27;
 }
 
 button.primary:hover {
-  background: #ffea70;
+  background: #e6c200;
 }
 
+button.secondary,
 button.ghost {
   background: transparent;
-  color: #ffd700;
   border: 2px solid #ffd700;
+  color: #ffd700;
 }
 
 button.ghost:hover {
-  background: rgba(255, 215, 0, 0.2);
+  background: #ffd700;
+  color: #1b1d27;
 }
 
 button.full {
   width: 100%;
-}
-
-.controls-row, .extra, .buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   margin-top: 10px;
 }
 
-small {
-  opacity: 0.7;
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
 }
 
 .hidden {
   display: none;
 }
 
-/* TOASTS */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: #ffd700;
-  color: #1b1d27;
-  padding: 15px 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  font-weight: bold;
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.toast-info { background: #ffd700; color: #1b1d27; }
-.toast-success { background: #28a745; color: #fff; }
-.toast-error { background: #d62828; color: #fff; }
-
-/* MODAL */
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal-box {
-  background: #2c2f3a;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  color: #f5f5dc;
-  max-width: 90%;
-  text-align: center;
-}
-
-.modal-box h2 {
-  color: #ffd700;
-}
-
-.modal-buttons {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-}
-
-/* LOADING SPINNER */
-.loading-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.75);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.spinner {
-  border: 6px solid #3b3f50;
-  border-top: 6px solid #ffd700;
-  border-radius: 50%;
-  width: 60px; height: 60px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* LINKS e FOOTER */
-.card-footer small {
-  display: block;
+.card-footer {
   margin-top: 15px;
   font-size: 12px;
-  opacity: 0.6;
+  color: #b5b58c;
+}
+
+/* Responsivo */
+@media (max-width: 400px) {
+  .centered-card {
+    width: 90%;
+    padding: 20px;
+  }
 }
