@@ -1,61 +1,45 @@
-/* style.css */
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* style.css - global */
+:root{
+  --bg:#f2f2f2;
+  --card:#ffffff;
+  --accent:#3b82f6;
+  --muted:#6b7280;
+  --dark:#1b1d27;
 }
 
-#app {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  width: 350px;
-  text-align: center;
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:#111}
+
+.centered-card{
+  width:100%;
+  max-width:420px;
+  margin:40px auto;
+  background:var(--card);
+  border-radius:12px;
+  box-shadow:0 6px 20px rgba(2,6,23,0.08);
+  padding:18px;
 }
 
-.hidden {
-  display: none;
+.centered-card.large{max-width:760px;padding:22px}
+
+.card-header h1{margin:0;font-size:20px}
+.subtitle{color:var(--muted);margin-top:6px;font-size:13px}
+
+.form-row{margin:12px 0}
+.form-row label{display:block;margin-bottom:6px;color:var(--muted);font-size:13px}
+input[type=text], input[type=password], select{
+  width:100%;padding:10px;border-radius:10px;border:1px solid #e6e9ef;
+  font-size:15px;
 }
 
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
+.controls-row{display:flex;gap:8px;justify-content:space-between;margin-top:8px}
+.btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+.btn.primary{background:var(--accent);color:white}
+.btn.ghost{background:transparent;border:1px solid #d1d5db;color:#111}
+.btn.full{width:100%}
+.btn.small{padding:6px 10px;font-size:13px}
 
-button {
-  width: 45%;
-  padding: 10px;
-  margin: 5px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+.card-footer{margin-top:8px;text-align:center;color:var(--muted);font-size:12px}
 
-button:hover {
-  background: #2563eb;
-}
-
-#question-box {
-  margin-top: 20px;
-}
-
-#answers button {
-  width: 100%;
-  margin-top: 10px;
-  background: #4b5563;
-}
-
-#answers button:hover {
-  background: #374151;
-}
+/* small helpers */
+.hidden{display:none}
