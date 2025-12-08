@@ -4,32 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Questions Multiplayer — Jogo</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/game.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="game.css" />
 </head>
 <body>
-
   <div id="game-container">
-    <!-- Top Bar -->
     <header id="top-bar">
       <div id="room-info">
-        <span>Sala: <b id="roomName">---</b></span>
+        <span>Sala: <b id="roomName">Carregando...</b></span>
         <span>Modo: <b id="mode">Normal</b></span>
         <span>Pergunta <b id="currentIndex">1</b>/<b id="totalQuestions">10</b></span>
       </div>
       <button id="btn-settings" class="btn small">Configurações</button>
     </header>
 
-    <!-- Área do jogo -->
     <main id="game-area">
       <div id="timer">20</div>
       <h2 id="question-text">Carregando pergunta...</h2>
       <div id="answers"></div>
     </main>
 
-    <!-- Footer / Status -->
     <footer id="footer-bar">
-      <div id="status">Aguardando jogadores...</div>
+      <div id="status">Aguardando...</div>
       <div id="score-board">Pontuação: <b id="score">0</b></div>
     </footer>
   </div>
@@ -43,30 +39,82 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="/js/ui.js"></script>
-  <script src="/js/api.js" type="module"></script>
-  <script src="/js/generator.js"></script>
-  <script src="/js/game.js" type="module"></script>
+  <script src="ui.js"></script>
+  <script src="api.js"></script>
+  <script src="generator.js"></script>
+  <script src="game.js"></script>
 
   <script>
-    // Captura parâmetros da URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const roomName = urlParams.get('room') || 'Demo';
-    const mode = urlParams.get('mode') || 'Normal';
-    const totalQuestions = parseInt(urlParams.get('questions')) || 10;
-    const timePerQuestion = parseInt(urlParams.get('time')) || 20;
+    // Recebe os parâmetros da URL (funciona para demo ou sala real)
+    const url = new URL(location.href);
+    const room = url.searchParams.get('room') || 'demo';
+    const password = url.searchParams.get('password') || 'demo';
+    const mode = url.searchParams.get('mode') || 'normal';
+    const totalQuestions = parseInt(url.searchParams.get('questions') || 10);
+    const timePerQuestion = parseInt(url.searchParams.get('time') || 20);
 
-    document.getElementById('roomName').textContent = roomName;
+    document.getElementById('roomName').textContent = room;
     document.getElementById('mode').textContent = mode;
     document.getElementById('totalQuestions').textContent = totalQuestions;
 
-    // Evento modal
-    const modal = document.getElementById('settings-modal');
-    document.getElementById('btn-settings').onclick = () => modal.classList.remove('hidden');
-    document.getElementById('btn-close-settings').onclick = () => modal.classList.add('hidden');
-    document.getElementById('btn-exit').onclick = () => window.location.href = '/index.html';
-  </script>
+    // Inicializa variáveis do jogo
+    let currentIndex = 1;
+    let score = 0;
 
+    function startGame() {
+      carregarNovaPergunta();
+    }
+
+    function carregarNovaPergunta() {
+      const p = gerarPergunta();
+      document.getElementById('question-text').textContent = p.pergunta;
+      const answersBox = document.getElementById('answers');
+      answersBox.innerHTML = '';
+
+      p.alternativas.forEach(alt => {
+        const btn = document.createElement('button');
+        btn.textContent = alt;
+        btn.onclick = () => verificarResposta(alt, p.correta);
+        answersBox.appendChild(btn);
+      });
+
+      // Timer simples
+      const timerEl = document.getElementById('timer');
+      let time = timePerQuestion;
+      timerEl.textContent = time;
+      const interval = setInterval(() => {
+        time--;
+        timerEl.textContent = time;
+        if (time <= 0) {
+          clearInterval(interval);
+          verificarResposta(null, p.correta); // Timeout conta como erro
+        }
+      }, 1000);
+    }
+
+    function verificarResposta(escolhida, correta) {
+      if (escolhida === correta) {
+        score += 10;
+        showToast('✅ Correto!', 'success');
+      } else {
+        showToast(`❌ Errado! Resposta certa: ${correta}`, 'error');
+      }
+
+      document.getElementById('score').textContent = score;
+      currentIndex++;
+
+      if (currentIndex > totalQuestions) {
+        // fim do jogo
+        const endPage = score >= totalQuestions * 5 ? 'victory.html' : 'defeat.html';
+        changeScreen(`${endPage}?score=${score}`);
+      } else {
+        document.getElementById('currentIndex').textContent = currentIndex;
+        carregarNovaPergunta();
+      }
+    }
+
+    // Inicia o jogo
+    startGame();
+  </script>
 </body>
 </html>
