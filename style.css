@@ -30,7 +30,12 @@ body, html {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh; /* Faz o card ocupar a tela inteira */
+  transition: 0.3s;
+}
+
+/* Classe que faz o card ocupar a tela inteira */
+.centered-card.full-screen {
+  min-height: 100vh;
 }
 
 /* Cabeçalho do card */
