@@ -1,173 +1,47 @@
-// generator.js
-// IA simples, totalmente offline, para gerar perguntas aleatórias
+// js/generator.js (module)
+export function gerarPergunta(nivel = 1, temaPref = null) {
+  // simplified but improved generator; returns object:
+  // { question, alternatives:[], correctIndex, correct }
+  // For brevity implement simpler generator (you can expand DB later)
+  const tipos = ['matematica','geografia','ciencia','curiosidade','historia'];
+  const tipo = temaPref || tipos[Math.floor(Math.random()*tipos.length)];
 
-function gerarPergunta() {
-    // --- Lista de temas ---
-    const temas = [
-        gerarMatematica,
-        gerarGeografia,
-        gerarHistoria,
-        gerarCiencia,
-        gerarCuriosidades
+  if(tipo === 'matematica'){
+    const a = rand(1,12), b = rand(1,12); const ops = ['+','-','×']; const op = ops[rand(0,ops.length-1)];
+    let res = op==='+'?a+b:(op==='-'?a-b:a*b);
+    const q = `Quanto é ${a} ${op} ${b}?`;
+    const alts = genNumAlts(res,3);
+    return { question:q, alternatives:shuffle([String(res),...alts]), correct:String(res) };
+  } else if(tipo==='geografia'){
+    const countries = [
+      {c:'Brasil',cap:'Brasília'},{c:'Japão',cap:'Tóquio'},
+      {c:'França',cap:'Paris'},{c:'Canadá',cap:'Ottawa'},{c:'Argentina',cap:'Buenos Aires'}
     ];
+    const pick = countries[rand(0,countries.length-1)];
+    const distract = countries.filter(x=>x.cap!==pick.cap).map(x=>x.cap);
+    const alts = shuffle([pick.cap,...pickMany(distract,3)]);
+    return { question:`Qual é a capital de ${pick.c}?`, alternatives:alts, correct:pick.cap };
+  } else if(tipo==='ciencia' || tipo==='curiosidade' || tipo==='historia'){
+    const pool = [
+      {q:'Qual planeta é conhecido como Planeta Vermelho?', a:'Marte', wrong:['Vênus','Júpiter','Saturno']},
+      {q:'Qual gás as plantas produzem na fotossíntese?', a:'Oxigênio', wrong:['Hidrogênio','Nitrogênio','Dióxido de carbono']},
+      {q:'Qual é o animal terrestre mais rápido do mundo?', a:'Guepardo', wrong:['Tigre','Gazela','Cavalo']},
+      {q:'Em que ano ocorreu a Independência do Brasil?', a:'1822', wrong:['1808','1815','1830']}
+    ];
+    const p = pool[rand(0,pool.length-1)];
+    return { question:p.q, alternatives:shuffle([p.a,...p.wrong]), correct:p.a };
+  }
 
-    // Escolher tema aleatório
-    const tema = temas[Math.floor(Math.random() * temas.length)];
-
-    // Gerar pergunta e respostas
-    return tema();
-}
-
-// ----------------------
-// 1. Perguntas de Matemática
-// ----------------------
-function gerarMatematica() {
-    const a = Math.floor(Math.random() * 20) + 1;
-    const b = Math.floor(Math.random() * 20) + 1;
-    const operacoes = ["+", "-", "x"];
-    const op = operacoes[Math.floor(Math.random() * operacoes.length)];
-
-    let correta;
-
-    if (op === "+") correta = a + b;
-    if (op === "-") correta = a - b;
-    if (op === "x") correta = a * b;
-
-    const pergunta = `Quanto é ${a} ${op} ${b}?`;
-
-    const alternativas = gerarAlternativasNumericas(correta);
-
-    return { pergunta, correta: correta.toString(), alternativas };
-}
-
-function gerarAlternativasNumericas(correta) {
-    let respostas = [correta];
-
-    while (respostas.length < 4) {
-        const erro = correta + (Math.floor(Math.random() * 10) - 5);
-        if (!respostas.includes(erro)) respostas.push(erro);
+  // helpers
+  function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+  function shuffle(arr){return arr.sort(()=>Math.random()-0.5);}
+  function genNumAlts(correct,n){
+    const s = new Set();
+    while(s.size<n){
+      const cand = correct + [ -3,-2,-1,1,2,3,5][rand(0,6)];
+      if(cand!==correct) s.add(String(cand));
     }
-
-    return respostas.map(String).sort(() => Math.random() - 0.5);
-}
-
-// ----------------------
-// 2. Perguntas de Geografia
-// ----------------------
-function gerarGeografia() {
-    const paises = [
-        { pais: "Brasil", capital: "Brasília" },
-        { pais: "Japão", capital: "Tóquio" },
-        { pais: "França", capital: "Paris" },
-        { pais: "Canadá", capital: "Ottawa" },
-        { pais: "Argentina", capital: "Buenos Aires" }
-    ];
-
-    const cidadesExtras = ["Roma", "Dubai", "Oslo", "Seul", "Sydney", "Lisboa"];
-
-    const escolhido = paises[Math.floor(Math.random() * paises.length)];
-
-    const correta = escolhido.capital;
-
-    let alternativas = [correta];
-
-    while (alternativas.length < 4) {
-        const aleatoria = cidadesExtras[Math.floor(Math.random() * cidadesExtras.length)];
-        if (!alternativas.includes(aleatoria)) alternativas.push(aleatoria);
-    }
-
-    return {
-        pergunta: `Qual é a capital de ${escolhido.pais}?`,
-        correta,
-        alternativas: alternativas.sort(() => Math.random() - 0.5)
-    };
-}
-
-// ----------------------
-// 3. História
-// ----------------------
-function gerarHistoria() {
-    const eventos = [
-        { evento: "a Independência do Brasil", ano: 1822 },
-        { evento: "a Revolução Francesa", ano: 1789 },
-        { evento: "o descobrimento do Brasil", ano: 1500 },
-        { evento: "o fim da Segunda Guerra Mundial", ano: 1945 }
-    ];
-
-    const e = eventos[Math.floor(Math.random() * eventos.length)];
-
-    const correta = e.ano;
-
-    const alternativas = gerarAlternativasNumericas(correta);
-
-    return {
-        pergunta: `Em que ano aconteceu ${e.evento}?`,
-        correta: correta.toString(),
-        alternativas
-    };
-}
-
-// ----------------------
-// 4. Ciências
-// ----------------------
-function gerarCiencia() {
-    const perguntas = [
-        {
-            p: "Qual planeta é conhecido como Planeta Vermelho?",
-            correta: "Marte",
-            erradas: ["Vênus", "Júpiter", "Saturno"]
-        },
-        {
-            p: "Qual gás as plantas produzem na fotossíntese?",
-            correta: "Oxigênio",
-            erradas: ["Hidrogênio", "Nitrogênio", "Dióxido de carbono"]
-        },
-        {
-            p: "Qual é o maior órgão do corpo humano?",
-            correta: "Pele",
-            erradas: ["Coração", "Fígado", "Pulmão"]
-        }
-    ];
-
-    const q = perguntas[Math.floor(Math.random() * perguntas.length)];
-
-    const alternativas = [q.correta, ...q.erradas].sort(() => Math.random() - 0.5);
-
-    return {
-        pergunta: q.p,
-        correta: q.correta,
-        alternativas
-    };
-}
-
-// ----------------------
-// 5. Curiosidades
-// ----------------------
-function gerarCuriosidades() {
-    const perguntas = [
-        {
-            p: "Qual é o animal terrestre mais rápido do mundo?",
-            correta: "Guepardo",
-            erradas: ["Tigre", "Gazela", "Cavalo"]
-        },
-        {
-            p: "Qual é o metal mais leve?",
-            correta: "Lítio",
-            erradas: ["Alumínio", "Sódio", "Titânio"]
-        },
-        {
-            p: "Qual país inventou o papel?",
-            correta: "China",
-            erradas: ["Egito", "Grécia", "Índia"]
-        }
-    ];
-
-    const q = perguntas[Math.floor(Math.random() * perguntas.length)];
-    const alternativas = [q.correta, ...q.erradas].sort(() => Math.random() - 0.5);
-
-    return {
-        pergunta: q.p,
-        correta: q.correta,
-        alternativas
-    };
+    return Array.from(s);
+  }
+  function pickMany(arr, n){ return shuffle(arr).slice(0,n); }
 }
