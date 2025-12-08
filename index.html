@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Questions Multiplayer — Entrar / Criar Sala</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/ui.css">
+</head>
+<body>
+  <main class="centered-card dark-card">
+    <header class="card-header">
+      <h1>Questions Multiplayer</h1>
+      <p class="subtitle">Crie uma sala, convide amigos e responda perguntas em tempo real.</p>
+    </header>
+
+    <section class="card-body">
+      <div class="form-row">
+        <label for="roomName">Nome da sala</label>
+        <input id="roomName" placeholder="Ex: SalaDoPedro" />
+      </div>
+
+      <div class="form-row">
+        <label for="roomPassword">Senha da sala</label>
+        <input id="roomPassword" type="password" placeholder="Senha (mín. 4 chars)" />
+      </div>
+
+      <div class="controls-row">
+        <button id="btn-create" class="btn primary">Criar sala</button>
+        <button id="btn-join" class="btn secondary">Entrar na sala</button>
+      </div>
+
+      <div class="extra">
+        <small>Ou: carregar uma sala de demonstração para testar.</small>
+        <button id="btn-demo" class="btn ghost">Sala demo</button>
+      </div>
+    </section>
+
+    <footer class="card-footer">
+      <small>Feito por você • Hospedado no GitHub Pages</small>
+    </footer>
+  </main>
+
+  <script>
+    // Navegação simples: envia para config.html ou game.html com parâmetros
+    function navigateTo(path, params){
+      const url = new URL(path, location.href);
+      if(params) Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
+      location.href = url.toString();
+    }
+
+    document.getElementById('btn-create').addEventListener('click', () => {
+      const name = document.getElementById('roomName').value.trim();
+      const pass = document.getElementById('roomPassword').value.trim();
+      if(!name || pass.length < 4){
+        alert('Escreva um nome de sala e senha de pelo menos 4 caracteres.');
+        return;
+      }
+      navigateTo('./config.html', {room: name, password: pass, host: 'true'});
+    });
+
+    document.getElementById('btn-join').addEventListener('click', () => {
+      const name = document.getElementById('roomName').value.trim();
+      const pass = document.getElementById('roomPassword').value.trim();
+      if(!name || pass.length < 1){
+        alert('Digite nome da sala e senha.');
+        return;
+      }
+      navigateTo('./game.html', {room: name, password: pass});
+    });
+
+    document.getElementById('btn-demo').addEventListener('click', () => {
+      navigateTo('./game.html', {room:'demo', password:'demo'});
+    });
+  </script>
+</body>
+</html>
