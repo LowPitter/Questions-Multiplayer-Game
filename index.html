@@ -3,75 +3,188 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Questions Multiplayer — Entrar / Criar Sala</title>
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="game.css">
-</head>
-<body>
-  <main class="centered-card">
-    <header class="card-header">
-      <h1>Questions Multiplayer</h1>
-      <p class="subtitle">Crie uma sala, convide amigos e responda perguntas em tempo real.</p>
-    </header>
-
-    <section class="card-body">
-      <div class="form-row">
-        <label for="roomName">Nome da sala</label>
-        <input id="roomName" placeholder="Ex: SalaDoPedro" />
-      </div>
-
-      <div class="form-row">
-        <label for="roomPassword">Senha da sala</label>
-        <input id="roomPassword" type="password" placeholder="Senha (mín. 4 chars)" />
-      </div>
-
-      <div class="controls-row">
-        <button id="btn-create" class="btn primary">Criar sala</button>
-        <button id="btn-join" class="btn">Entrar na sala</button>
-      </div>
-
-      <div class="extra">
-        <small>Ou: carregar uma sala de exemplo para testar.</small>
-        <button id="btn-demo" class="btn ghost">Sala demo</button>
-      </div>
-    </section>
-
-    <footer class="card-footer">
-      <small>Feito por você • Hospedado no GitHub Pages</small>
-    </footer>
-  </main>
-
-  <!-- JS -->
-  <script src="ui.js"></script>
-  <script src="api.js"></script>
-  <script src="generator.js"></script>
-  <script src="game.js"></script>
-
-  <script>
-    // Navegação simples: envia para config.html ou game.html com params
-    function navigateTo(path, params){
-      const url = new URL(path, location.href);
-      if(params) Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
-      location.href = url.toString();
+  <title>Teste do Milhão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #12131a;
+      color: #FFD700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
 
-    document.getElementById('btn-create').addEventListener('click', ()=> {
-      const name = document.getElementById('roomName').value.trim();
-      const pass = document.getElementById('roomPassword').value.trim();
-      if(!name || pass.length < 4){ alert('Escreva um nome de sala e senha de pelo menos 4 caracteres.'); return; }
-      navigateTo('config.html', {room: name, password: pass, host: 'true'});
+    .centered-card {
+      background: #1b1d27;
+      padding: 30px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      width: 350px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background: #FFD700;
+      color: #1b1d27;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #e0c200;
+    }
+
+    input[type=text], input[type=password] {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #FFD700;
+      background: #1b1d27;
+      color: #FFD700;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="centered-card">
+    <h1>Teste do Milhão</h1>
+
+    <!-- Botões iniciais -->
+    <div id="initial-buttons">
+      <button id="btn-create-init">Criar Sala</button>
+      <button id="btn-join-init">Entrar na Sala</button>
+    </div>
+
+    <!-- Formulário criar sala -->
+    <div id="create-form" class="hidden">
+      <input type="text" id="createRoomName" placeholder="Nome da Sala">
+      <label><input type="checkbox" id="createPrivate"> Privada?</label>
+      <input type="password" id="createPassword" placeholder="Senha" class="hidden">
+      <div class="button-row">
+        <button id="btn-create-room">Criar Sala</button>
+        <button id="btn-back-create">Voltar</button>
+      </div>
+    </div>
+
+    <!-- Formulário entrar sala -->
+    <div id="join-form" class="hidden">
+      <input type="text" id="joinRoomName" placeholder="Nome da Sala">
+      <label><input type="checkbox" id="joinPrivate"> Privada?</label>
+      <input type="password" id="joinPassword" placeholder="Senha" class="hidden">
+      <div class="button-row">
+        <button id="btn-join-room">Entrar na Sala</button>
+        <button id="btn-back-join">Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Elementos
+    const initialButtons = document.getElementById('initial-buttons');
+
+    const createForm = document.getElementById('create-form');
+    const joinForm = document.getElementById('join-form');
+
+    const createPrivate = document.getElementById('createPrivate');
+    const createPassword = document.getElementById('createPassword');
+
+    const joinPrivate = document.getElementById('joinPrivate');
+    const joinPassword = document.getElementById('joinPassword');
+
+    // Mostrar campos senha se privada marcada
+    createPrivate.addEventListener('change', () => {
+      createPassword.classList.toggle('hidden', !createPrivate.checked);
     });
 
-    document.getElementById('btn-join').addEventListener('click', ()=> {
-      const name = document.getElementById('roomName').value.trim();
-      const pass = document.getElementById('roomPassword').value.trim();
-      if(!name || pass.length < 1){ alert('Digite nome da sala e senha.'); return; }
-      navigateTo('game.html', {room: name, password: pass});
+    joinPrivate.addEventListener('change', () => {
+      joinPassword.classList.toggle('hidden', !joinPrivate.checked);
     });
 
-    document.getElementById('btn-demo').addEventListener('click', ()=> {
-      navigateTo('game.html', {room:'demo', password:'demo'});
+    // Botões iniciais
+    document.getElementById('btn-create-init').addEventListener('click', () => {
+      initialButtons.classList.add('hidden');
+      createForm.classList.remove('hidden');
+    });
+
+    document.getElementById('btn-join-init').addEventListener('click', () => {
+      initialButtons.classList.add('hidden');
+      joinForm.classList.remove('hidden');
+    });
+
+    // Botões voltar
+    document.getElementById('btn-back-create').addEventListener('click', () => {
+      createForm.classList.add('hidden');
+      initialButtons.classList.remove('hidden');
+    });
+
+    document.getElementById('btn-back-join').addEventListener('click', () => {
+      joinForm.classList.add('hidden');
+      initialButtons.classList.remove('hidden');
+    });
+
+    // Botão criar sala
+    document.getElementById('btn-create-room').addEventListener('click', () => {
+      const name = document.getElementById('createRoomName').value.trim();
+      const isPrivate = createPrivate.checked;
+      const password = createPassword.value.trim();
+
+      if (!name) { alert("Digite o nome da sala."); return; }
+      if (isPrivate && password.length < 4) { alert("Digite uma senha com pelo menos 4 caracteres."); return; }
+
+      // Aqui vai para config.html com os parâmetros
+      const params = new URLSearchParams();
+      params.set('room', name);
+      params.set('password', password);
+      params.set('host', 'true');
+
+      location.href = '/config.html?' + params.toString();
+    });
+
+    // Botão entrar sala
+    document.getElementById('btn-join-room').addEventListener('click', () => {
+      const name = document.getElementById('joinRoomName').value.trim();
+      const isPrivate = joinPrivate.checked;
+      const password = joinPassword.value.trim();
+
+      if (!name) { alert("Digite o nome da sala."); return; }
+      if (isPrivate && password.length < 1) { alert("Digite a senha da sala."); return; }
+
+      const params = new URLSearchParams();
+      params.set('room', name);
+      params.set('password', password);
+
+      location.href = '/game.html?' + params.toString();
     });
   </script>
 </body>
