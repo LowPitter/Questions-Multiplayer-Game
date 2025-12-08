@@ -75,10 +75,18 @@
   </main>
 
   <script>
-    const url = new URL(location.href);
-    const room = url.searchParams.get('room') || '';
-    const password = url.searchParams.get('password') || '';
-    const isHost = url.searchParams.get('host') === 'true';
+    // Ler params seguros via sessionStorage
+    function readNavParams(path){
+      const key = `nav:${path}`;
+      const raw = sessionStorage.getItem(key);
+      if(!raw) return null;
+      try { return JSON.parse(raw); } catch(e){ return null; }
+    }
+
+    const nav = readNavParams('/config.html') || {};
+    const room = nav.room || '';
+    const password = nav.password || '';
+    const isHost = !!nav.host;
 
     document.getElementById('roomName').value = room;
     document.getElementById('roomPassword').value = password;
@@ -88,19 +96,23 @@
       location.href = '/index.html';
     }
 
-    document.getElementById('btn-start').addEventListener('click', ()=>{
-      const params = new URLSearchParams();
-      params.set('room', room);
-      params.set('password', password);
-      params.set('questions', document.getElementById('questionCount').value);
-      params.set('time', document.getElementById('timeLimit').value);
-      params.set('mode', document.getElementById('mode').value);
-      params.set('privacy', document.getElementById('privacy').value);
+    document.getElementById('btn-start').addEventListener('click', ()=> {
+      // store config into session storage and go to game
+      const cfg = {
+        questions: +document.getElementById('questionCount').value,
+        time: +document.getElementById('timeLimit').value,
+        mode: document.getElementById('mode').value,
+        privacy: document.getElementById('privacy').value
+      };
+      // save to sessionStorage keyed to room (not exposing password in URL)
+      sessionStorage.setItem(`roomcfg:${room}`, JSON.stringify(cfg));
 
-      location.href = '/game.html?' + params.toString();
+      // pass nav params to game
+      sessionStorage.setItem(`nav:/game.html`, JSON.stringify({ room, password, host: true }));
+      location.href = '/game.html';
     });
 
-    document.getElementById('btn-back').addEventListener('click', ()=>{
+    document.getElementById('btn-back').addEventListener('click', ()=> {
       location.href = '/index.html';
     });
   </script>
