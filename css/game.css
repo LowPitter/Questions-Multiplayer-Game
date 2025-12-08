@@ -1,0 +1,255 @@
+/* =======================================================
+   GAME.CSS — Estilos do Jogo Questions Multiplayer
+   Tema: Dark + Dourado
+======================================================= */
+
+/* -------------------------
+   Container principal
+---------------------------*/
+#game-container {
+  max-width: 900px;
+  width: 95%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* -------------------------
+   Top Bar
+---------------------------*/
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #2c2f3a;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+#top-bar span {
+  font-size: 14px;
+  color: #ffd700;
+}
+
+#btn-settings {
+  background: #ffd700;
+  color: #1b1d27;
+  padding: 8px 15px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+#btn-settings:hover {
+  background: #e6c200;
+}
+
+/* -------------------------
+   Game Area
+---------------------------*/
+#game-area {
+  background: #1e2028;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Temporizador */
+#timer {
+  font-size: 36px;
+  font-weight: bold;
+  background: #2c2f3a;
+  color: #ffd700;
+  width: 100px;
+  text-align: center;
+  padding: 15px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Pergunta */
+#question-text {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffd700;
+}
+
+/* Respostas */
+#answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+}
+
+#answers button {
+  background: #333;
+  color: #fff;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#answers button:hover {
+  background: #444;
+}
+
+#answers button.correct {
+  background: #28a745 !important;
+  color: #fff;
+}
+
+#answers button.wrong {
+  background: #d62828 !important;
+  color: #fff;
+}
+
+/* -------------------------
+   Footer Bar
+---------------------------*/
+#footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c2f3a;
+  padding: 12px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+#status {
+  font-size: 14px;
+  color: #ffd700;
+}
+
+#score-board b {
+  font-size: 18px;
+  color: #fff;
+}
+
+/* -------------------------
+   Modal Configurações
+---------------------------*/
+.modal {
+  position: fixed;
+  top:0; left:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #2c2f3a;
+  padding: 25px;
+  border-radius: 18px;
+  width: 320px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+  text-align: center;
+  color: #ffd700;
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.modal-content button {
+  margin-top: 10px;
+  width: 100%;
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.modal-content button#btn-exit {
+  background: #d62828;
+  color: #fff;
+}
+
+.modal-content button#btn-close-settings {
+  background: #ffd700;
+  color: #1b1d27;
+}
+
+.modal-content button:hover {
+  opacity: 0.85;
+}
+
+/* -------------------------
+   End Screens (vitória/derrota)
+---------------------------*/
+.end-screen {
+  max-width: 500px;
+  width: 90%;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  background: #2c2f3a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.end-screen h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.end-screen .subtitle {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #ffd700;
+  opacity: 0.9;
+}
+
+.score-box {
+  font-size: 40px;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 25px;
+  background: #1b1d27;
+  color: #ffd700;
+}
+
+.end-screen.victory h1 {
+  color: #28a745;
+}
+
+.end-screen.defeat h1 {
+  color: #d62828;
+}
+
+.end-screen button {
+  margin-top: 10px;
+}
+
+/* -------------------------
+   Responsividade
+---------------------------*/
+@media (max-width: 600px){
+  #answers {
+    grid-template-columns: 1fr;
+  }
+
+  #top-bar, #footer-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
