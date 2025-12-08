@@ -1,53 +1,45 @@
-/* ==============================
-   ESTILO DO JOGO — DARK + DOURADO
-   ============================== */
+/* ==========================
+   game.css — estilo do jogo
+   ========================== */
+
+body {
+  background: #1b1d27;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
 
 #game-container {
-  width: 100%;
   max-width: 900px;
-  margin: auto;
+  margin: 30px auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  color: #f5f5dc;
 }
 
-/* ----------- Top Bar ----------- */
+/* Top Bar */
 #top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  background: #2c2f3a;
-  color: #ffd700;
+  padding: 12px 20px;
+  background: #222;
   border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 #top-bar #room-info span {
-  margin-right: 15px;
+  margin-right: 20px;
   font-size: 14px;
-  opacity: 0.9;
+  color: #f5c518;
 }
 
-.btn.small {
-  padding: 5px 12px;
-  font-size: 14px;
-  background: #ffd700;
-  color: #1b1d27;
-}
-
-.btn.small:hover {
-  background: #ffea70;
-}
-
-/* ----------- Área do jogo ----------- */
+/* Game Area */
 #game-area {
-  background: #2c2f3a;
+  background: #2b2d3a;
   padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -57,21 +49,21 @@
   font-size: 36px;
   font-weight: bold;
   text-align: center;
-  background: #ffd700;
-  color: #1b1d27;
+  background: #000;
+  color: #f5c518;
   width: 100px;
-  margin: auto;
-  padding: 10px;
+  padding: 15px;
   border-radius: 50px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
 }
 
 #question-text {
   text-align: center;
   font-size: 22px;
   font-weight: 600;
-  margin-bottom: 10px;
-  color: #f5f5dc;
+  color: #f5c518;
+  margin-bottom: 15px;
 }
 
 #answers {
@@ -82,18 +74,19 @@
 
 #answers button {
   padding: 15px;
-  border-radius: 14px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
-  background: #3b3f50;
-  border: none;
+  background: #44475a;
+  color: #f5c518;
+  border: 2px solid #f5c518;
   cursor: pointer;
   transition: 0.2s;
-  color: #f5f5dc;
 }
 
 #answers button:hover {
-  background: #4b5563;
+  background: #f5c518;
+  color: #222;
 }
 
 #answers button.correct {
@@ -106,28 +99,28 @@
   color: #fff;
 }
 
-/* ----------- Rodapé ----------- */
+/* Footer */
 #footer-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #2c2f3a;
-  color: #ffd700;
+  background: #222;
   padding: 12px 20px;
   border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 #status {
   font-size: 14px;
-  opacity: 0.9;
+  color: #f5c518;
 }
 
 #score-board b {
   font-size: 18px;
+  color: #f5c518;
 }
 
-/* ----------- Modal Configurações ----------- */
+/* Modal Configurações */
 .modal {
   position: fixed;
   top: 0;
@@ -138,8 +131,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(3px);
-  z-index: 1000;
 }
 
 .modal.hidden {
@@ -147,39 +138,19 @@
 }
 
 .modal-content {
-  background: #2c2f3a;
+  background: #2b2d3a;
   padding: 25px;
-  width: 320px;
+  width: 350px;
   border-radius: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
   display: flex;
   flex-direction: column;
   gap: 15px;
   text-align: center;
-  color: #f5f5dc;
+  color: #f5c518;
 }
 
-.modal-content h2 {
-  color: #ffd700;
-}
-
-.modal-content button {
-  background: #ffd700;
-  color: #1b1d27;
-  font-weight: bold;
-}
-
-.modal-content button.ghost {
-  background: transparent;
-  border: 2px solid #ffd700;
-  color: #ffd700;
-}
-
-.modal-content button:hover {
-  opacity: 0.85;
-}
-
-/* ----------- Fim de jogo ----------- */
+/* End Screen */
 .end-screen {
   width: 100%;
   max-width: 500px;
@@ -187,9 +158,9 @@
   text-align: center;
   padding: 30px;
   border-radius: 20px;
-  background: #2c2f3a;
+  background: #2b2d3a;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  color: #f5f5dc;
+  color: #f5c518;
 }
 
 .end-screen h1 {
@@ -206,15 +177,14 @@
 .score-box {
   font-size: 40px;
   font-weight: bold;
-  background: #ffd700;
-  color: #1b1d27;
+  background: #000;
+  color: #f5c518;
   padding: 20px;
   border-radius: 18px;
   margin-bottom: 25px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
 }
 
-/* ----- vitória e derrota ----- */
 .end-screen.victory h1 {
   color: #28a745;
 }
