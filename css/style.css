@@ -1,0 +1,161 @@
+/* ==========================
+   style.css — Tema Dark/Dourado
+   ========================== */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #1b1d27; /* dark */
+  color: #f0e68c; /* dourado */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.centered-card {
+  background: #2c2f3a;
+  border: 3px solid #f0e68c;
+  border-radius: 16px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(240, 230, 140, 0.5);
+  padding: 20px;
+}
+
+.card-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #f0e68c;
+}
+
+.card-header .subtitle {
+  font-size: 14px;
+  color: #ffe680;
+  margin-top: 4px;
+}
+
+.card-body {
+  margin-top: 15px;
+}
+
+.form-row {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.form-row label {
+  display: block;
+  margin-bottom: 4px;
+  color: #fffacd;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.form-row input,
+.form-row select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #f0e68c;
+  background: #1f2029;
+  color: #fffacd;
+  font-size: 14px;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.controls-row button {
+  width: 48%;
+}
+
+.btn {
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+.btn.primary {
+  background: #f0e68c;
+  color: #1b1d27;
+}
+
+.btn.primary:hover {
+  background: #ffe680;
+}
+
+.btn.secondary {
+  background: #444654;
+  color: #f0e68c;
+}
+
+.btn.secondary:hover {
+  background: #5a5c70;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 2px solid #f0e68c;
+  color: #f0e68c;
+}
+
+.btn.ghost:hover {
+  background: #f0e68c;
+  color: #1b1d27;
+}
+
+.extra {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.extra small {
+  color: #ffe680;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Footer */
+.card-footer {
+  margin-top: 15px;
+  font-size: 11px;
+  color: #ffe680;
+  text-align: center;
+}
+
+/* Input foco */
+input:focus,
+select:focus {
+  outline: 2px solid #f0e68c;
+  background: #2c2f3a;
+}
+
+/* Esconder elementos */
+.hidden {
+  display: none;
+}
+
+/* Responsividade */
+@media (max-width: 400px) {
+  .centered-card {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .controls-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .controls-row button {
+    width: 100%;
+  }
+}
