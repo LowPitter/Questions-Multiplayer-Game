@@ -41,29 +41,32 @@
   </main>
 
   <script>
-    // Navegação simples: envia para config.html com params
+    // Navegação simples e segura: usa sessionStorage para não expor senha na URL
     function navigateTo(path, params){
-      const url = new URL(path, location.href);
-      if(params) Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
-      location.href = url.toString();
+      // params is plain object; we store in sessionStorage under a key built from path
+      if(params){
+        const key = `nav:${path}`;
+        sessionStorage.setItem(key, JSON.stringify(params));
+      }
+      location.href = path;
     }
 
-    document.getElementById('btn-create').addEventListener('click', ()=>{
+    document.getElementById('btn-create').addEventListener('click', ()=> {
       const name = document.getElementById('roomName').value.trim();
       const pass = document.getElementById('roomPassword').value.trim();
       if(!name || pass.length < 4){ alert('Escreva um nome de sala e senha de pelo menos 4 caracteres.'); return; }
-      navigateTo('/config.html', {room: name, password: pass, host: 'true'});
+      navigateTo('/config.html', { room: name, password: pass, host: true });
     });
 
-    document.getElementById('btn-join').addEventListener('click', ()=>{
+    document.getElementById('btn-join').addEventListener('click', ()=> {
       const name = document.getElementById('roomName').value.trim();
       const pass = document.getElementById('roomPassword').value.trim();
       if(!name || pass.length < 1){ alert('Digite nome da sala e senha.'); return; }
-      navigateTo('/game.html', {room: name, password: pass});
+      navigateTo('/game.html', { room: name, password: pass, host: false });
     });
 
-    document.getElementById('btn-demo').addEventListener('click', ()=>{
-      navigateTo('/game.html', {room:'demo', password:'demo'});
+    document.getElementById('btn-demo').addEventListener('click', ()=> {
+      navigateTo('/game.html', { room:'DEMO', password:'demo', demo:true, host:false });
     });
   </script>
 </body>
