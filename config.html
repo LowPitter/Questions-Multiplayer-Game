@@ -4,10 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Configurar Sala — Questions Multiplayer</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game.css">
 </head>
 <body>
-  <main class="centered-card large dark-card">
+  <main class="centered-card large">
     <header class="card-header">
       <h1>Configurar Sala</h1>
       <p class="subtitle">Ajuste as regras antes de começar.</p>
@@ -85,7 +86,7 @@
 
     if(!isHost){
       alert('Apenas o criador da sala pode configurar.');
-      location.href = '/index.html';
+      location.href = 'index.html';
     }
 
     document.getElementById('btn-start').addEventListener('click', ()=>{
@@ -97,11 +98,11 @@
       params.set('mode', document.getElementById('mode').value);
       params.set('privacy', document.getElementById('privacy').value);
 
-      location.href = '/game.html?' + params.toString();
+      location.href = 'game.html?' + params.toString();
     });
 
     document.getElementById('btn-back').addEventListener('click', ()=>{
-      location.href = '/index.html';
+      location.href = 'index.html';
     });
   </script>
 </body>
