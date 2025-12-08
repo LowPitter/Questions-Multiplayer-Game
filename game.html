@@ -8,40 +8,65 @@
   <link rel="stylesheet" href="/css/game.css" />
 </head>
 <body>
-  <div id="game-container" class="dark-card">
+
+  <div id="game-container">
+    <!-- Top Bar -->
     <header id="top-bar">
       <div id="room-info">
-        <span>Sala: <b id="roomName"></b></span>
-        <span>Modo: <b id="mode"></b></span>
-        <span>Pergunta <b id="currentIndex">1</b>/<b id="totalQuestions"></b></span>
+        <span>Sala: <b id="roomName">---</b></span>
+        <span>Modo: <b id="mode">Normal</b></span>
+        <span>Pergunta <b id="currentIndex">1</b>/<b id="totalQuestions">10</b></span>
       </div>
       <button id="btn-settings" class="btn small">Configurações</button>
     </header>
 
+    <!-- Área do jogo -->
     <main id="game-area">
       <div id="timer">20</div>
       <h2 id="question-text">Carregando pergunta...</h2>
       <div id="answers"></div>
     </main>
 
+    <!-- Footer / Status -->
     <footer id="footer-bar">
-      <div id="status">Aguardando...</div>
+      <div id="status">Aguardando jogadores...</div>
       <div id="score-board">Pontuação: <b id="score">0</b></div>
     </footer>
   </div>
 
   <!-- Modal Configurações -->
   <div id="settings-modal" class="modal hidden">
-    <div class="modal-content dark-card">
+    <div class="modal-content">
       <h2>Configurações</h2>
       <button class="btn full" id="btn-exit">Sair da sala</button>
       <button class="btn ghost full" id="btn-close-settings">Voltar</button>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="/js/ui.js"></script>
-  <script src="/js/api.js"></script>
+  <script src="/js/api.js" type="module"></script>
   <script src="/js/generator.js"></script>
-  <script src="/js/game.js"></script>
+  <script src="/js/game.js" type="module"></script>
+
+  <script>
+    // Captura parâmetros da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomName = urlParams.get('room') || 'Demo';
+    const mode = urlParams.get('mode') || 'Normal';
+    const totalQuestions = parseInt(urlParams.get('questions')) || 10;
+    const timePerQuestion = parseInt(urlParams.get('time')) || 20;
+
+    document.getElementById('roomName').textContent = roomName;
+    document.getElementById('mode').textContent = mode;
+    document.getElementById('totalQuestions').textContent = totalQuestions;
+
+    // Evento modal
+    const modal = document.getElementById('settings-modal');
+    document.getElementById('btn-settings').onclick = () => modal.classList.remove('hidden');
+    document.getElementById('btn-close-settings').onclick = () => modal.classList.add('hidden');
+    document.getElementById('btn-exit').onclick = () => window.location.href = '/index.html';
+  </script>
+
 </body>
 </html>
